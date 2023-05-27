@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "render.h": "c",
+        "glad.h": "c",
+        "render_internal.h": "c",
+        "game_state.h": "c",
+        "io.h": "c",
+        "engine_file.h": "c",
+        "debug.h": "c",
+        "shader.h": "c",
+        "sdl.h": "c",
+        "stdbool.h": "c"
+    }
+}
