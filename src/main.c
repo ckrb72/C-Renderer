@@ -25,7 +25,7 @@ Entity entity2;
 
 int main(int argc, char* argv[])
 {
-	//Setup
+	//Setup Render State
 	render_init(&state, WIN_WIDTH, WIN_HEIGHT);
 
 	Entity entity;
@@ -64,6 +64,7 @@ int main(int argc, char* argv[])
 
 	render_draw(&entity2);
 
+	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
 
 	}

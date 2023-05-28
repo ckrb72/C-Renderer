@@ -3,6 +3,8 @@
 #include "../shader/shader.h"
 #include <stdio.h>
 
+//Creates the entity with the given position
+//Gives the entity the default shader
 Entity create_entity(vec2 position)
 {
     Entity entity =

@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL2/SDL.h>
 
+//Holds the window
 typedef struct render_state
 {
     SDL_Window* window;

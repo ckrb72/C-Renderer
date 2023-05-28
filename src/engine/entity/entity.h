@@ -12,6 +12,8 @@ typedef struct buffer_state
     unsigned int index_size;
 }Buffer_State;
 
+//Proably want to make this all dynamic in some way but idk how to do that
+//so this is good for now
 typedef struct entity
 {
     Buffer_State buffer;

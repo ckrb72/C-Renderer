@@ -21,6 +21,7 @@ SDL_Window* render_init_window(float width, float height)
     //Creates the SDL window
     SDL_Window* window = SDL_CreateWindow("My Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
 
+    //Sets the opengl context to the current window
     SDL_GL_CreateContext(window);
 
     //Loads Glad
