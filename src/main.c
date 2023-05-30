@@ -68,6 +68,9 @@ int main(int argc, char* argv[])
 	render_display(&state);
 
 	}
+
+	shader_delete(entity.shader);
+	shader_delete(entity2.shader);
 	
 	return 0;
 }
