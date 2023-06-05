@@ -9,10 +9,10 @@ Buffer_State buffer_init()
     //(They get changed when the projection and model matricies are introduced in the shader)
     float vertices[] = 
     {
-        -0.5, -0.5, 0.0,
-        0.5, -0.5, 0.0,
-        0.5, 0.5, 0.0,
-        -0.5, 0.5, 0.0
+        -0.5, -0.5, 0.0,    0.0, 0.0,
+        0.5, -0.5, 0.0,     1.0, 0.0,
+        0.5, 0.5, 0.0,      1.0, 1.0,
+        -0.5, 0.5, 0.0,     0.0, 1.0
     };
 
     //Indices of a square.
@@ -23,6 +23,7 @@ Buffer_State buffer_init()
         0, 1, 2,
         2, 3, 0
     };
+
 
 
     Buffer_State buffer;
@@ -44,9 +45,11 @@ Buffer_State buffer_init()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     //Sets the Vertex Pointer
-    //Just uses one because it's only 3 vertices and no UV's at this point
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 
     //Unbinds the VAO so nothing accidentally changes it
     glBindVertexArray(0);

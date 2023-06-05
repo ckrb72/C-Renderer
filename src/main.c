@@ -9,7 +9,7 @@
 #include "engine/game_state.h"
 #include "engine/render/render.h"
 #include "engine/shader/shader.h"
-
+#include "engine/texture/texture.h"
 #include <linmath.h>
 
 #define WIN_WIDTH 800
@@ -31,9 +31,12 @@ int main(int argc, char* argv[])
 	Entity entity;
 
 	entity = create_entity((vec2){state.render.width / 2, state.render.height / 2});
-
-	entity2 = create_entity((vec2){0, 0});
 	
+	entity.shader = shader_compile("./res/shaders/texture.vert", "./res/shaders/texture.frag");
+
+	//FIXME: BEWARE
+	//texture_load won't work with png's yet because I haven't added GL_RGBA yet to the function but will do that soon.
+	entity.texture = texture_load("./container.jpg");
 
 	//poll events
 	while(!should_quit)
@@ -51,18 +54,15 @@ int main(int argc, char* argv[])
 			}
 		}
 
-	entity.pos[0] += 1;
-	entity.pos[1] += 1;
-
-	entity2.pos[0] += 1;
-	entity2.pos[1] += 1;
+	if(entity.pos[0] > WIN_WIDTH || entity.pos[0] < 0)
+	{
+		
+	}
 
 	render_clear();
 
 	//Doesn't work right now for some reason. Need to debug this
 	render_draw(&entity);
-
-	render_draw(&entity2);
 
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);

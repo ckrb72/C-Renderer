@@ -1,5 +1,6 @@
 #pragma once
 #include <linmath.h>
+#include "../texture/texture.h"
 
 //Would like this to be in buffer.h but whenever I put
 //it there the whole thing FUCKING breaks????!!!!?!?!?
@@ -19,6 +20,7 @@ typedef struct entity
     Buffer_State buffer;
     vec2 pos;
     unsigned int shader;
+    Texture texture;
 }Entity;
 
 //Might want to change this to return a pointer at some point but fine for now
