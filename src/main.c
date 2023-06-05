@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 
 	//FIXME: BEWARE
 	//texture_load won't work with png's yet because I haven't added GL_RGBA yet to the function but will do that soon.
-	entity.texture = texture_load("./container.jpg");
+	entity.texture = texture_load("./container.jpg", CG_JPG);
 
 	//poll events
 	while(!should_quit)
@@ -54,10 +54,8 @@ int main(int argc, char* argv[])
 			}
 		}
 
-	if(entity.pos[0] > WIN_WIDTH || entity.pos[0] < 0)
-	{
-		
-	}
+	entity.pos[0] += 0.5;
+	entity.pos[1] += 0.5;
 
 	render_clear();
 
