@@ -34,9 +34,15 @@ int main(int argc, char* argv[])
 	
 	entity.shader = shader_compile("./res/shaders/texture.vert", "./res/shaders/texture.frag");
 
-	//FIXME: BEWARE
-	//texture_load won't work with png's yet because I haven't added GL_RGBA yet to the function but will do that soon.
 	entity.texture = texture_load("./container.jpg", CG_JPG);
+
+	Entity e2 = create_entity((vec2){state.render.width / 2, state.render.height / 2});
+
+	e2.shader = entity.shader;
+
+	//PNG's work but for some reason the transparency isn't quite working right.
+	//It loads the image but the transparent parts come out as black rather than the background color.
+	e2.texture = texture_load("./awesomeface.png", CG_PNG);
 
 	//poll events
 	while(!should_quit)
@@ -61,6 +67,8 @@ int main(int argc, char* argv[])
 
 	//Doesn't work right now for some reason. Need to debug this
 	render_draw(&entity);
+
+	render_draw(&e2);
 
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
