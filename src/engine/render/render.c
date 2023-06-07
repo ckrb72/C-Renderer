@@ -36,7 +36,7 @@ void render_draw(Entity* entity)
 
     //Creates the model matrix, translates it to the position and scales it then send it to the shader
     mat4x4_translate(model, entity->pos[0], entity->pos[1], 0);
-    mat4x4_scale_aniso(model, model, 200, 200, 1);
+    mat4x4_scale_aniso(model, model, entity->scale[0], entity->scale[1], 1);
 
     glUniformMatrix4fv(glGetUniformLocation(entity->shader, "model"), 1, GL_FALSE, &model[0][0]);
 

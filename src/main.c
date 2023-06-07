@@ -30,19 +30,24 @@ int main(int argc, char* argv[])
 
 	Entity entity;
 
-	entity = create_entity((vec2){state.render.width / 2, state.render.height / 2});
+	entity = entity_create((vec2){state.render.width / 2, state.render.height / 2}, (vec2){200, 200});
 	
 	entity.shader = shader_compile("./res/shaders/texture.vert", "./res/shaders/texture.frag");
 
 	entity.texture = texture_load("./container.jpg", CG_JPG);
 
-	Entity e2 = create_entity((vec2){state.render.width / 2, state.render.height / 2});
+	entity_set_scale(&entity, (vec2){400, 400});
+
+	Entity e2 = entity_create((vec2){state.render.width / 2, state.render.height / 2}, (vec2){200, 200});
 
 	e2.shader = entity.shader;
 
-	//PNG's work but for some reason the transparency isn't quite working right.
-	//It loads the image but the transparent parts come out as black rather than the background color.
 	e2.texture = texture_load("./awesomeface.png", CG_PNG);
+
+	entity_set_scale(&e2, (vec2){400, 400});
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//poll events
 	while(!should_quit)
@@ -75,6 +80,8 @@ int main(int argc, char* argv[])
 
 	}
 
+	texture_delete(&entity.texture);
+	texture_delete(&e2.texture);
 	shader_delete(entity.shader);
 	shader_delete(entity2.shader);
 	

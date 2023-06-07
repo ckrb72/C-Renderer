@@ -19,9 +19,16 @@ typedef struct entity
 {
     Buffer_State buffer;
     vec2 pos;
+    vec2 scale;
     unsigned int shader;
     Texture texture;
 }Entity;
 
 //Might want to change this to return a pointer at some point but fine for now
-Entity create_entity(vec2 position);
+Entity entity_create(vec2 position, vec2 scale);
+
+void entity_set_scale(Entity* entity, vec2 scale);
+
+void entity_set_position(Entity* entity, vec2 position);
+
+//vec2 entity_get_scale(Entity* entity);

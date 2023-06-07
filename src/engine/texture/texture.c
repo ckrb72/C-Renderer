@@ -43,5 +43,8 @@ Texture texture_load(const char* path, Texture_Type fileType)
 
 void texture_delete(Texture* tex)
 {
-   
+   glDeleteTextures(1, &tex->gl_texture);
+   tex->height = 0;
+   tex->width = 0;
+   tex->nrChannels = 0;
 }
