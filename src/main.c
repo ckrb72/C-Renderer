@@ -91,16 +91,21 @@ int main(int argc, char* argv[])
 		int rightrectangeltop = rightranlgec.pos[1]+10;
 		int rightrectangelbot = rightranlgec.pos[1]-10;
 
-		if(gapple.pos[1] >= leftrectangeltop && gapple.pos[1] <= leftrectangelbot)
-			velocity[0] *= -1;
-
-		if(gapple.pos[1] >= rightrectangeltop && gapple.pos[1] <= rightrectangelbot)
-			velocity[0] *= -1;
-
-
-	if(gapple.pos[0] >= WIN_WIDTH - 20 || gapple.pos[0] <= 20)
-		velocity[0] *= -1;
 	
+	//Need to fix collisions
+	if(gapple.pos[0] >= leftrectangel.pos[0] - 10 && gapple.pos[0] <= leftrectangel.pos[0] + 10 && gapple.pos[1] >= leftrectangel.pos[1] - 50 && gapple.pos[1] <= leftrectangel.pos[1] + 50)
+	{
+		gapple.pos[0] = leftrectangel.pos[0];
+		velocity[1] *= -1;
+	}
+	
+	if(gapple.pos[0] >= rightranlgec.pos[0] - 10 && gapple.pos[0] <= rightranlgec.pos[0] + 10 && gapple.pos[1] >= rightranlgec.pos[1] - 50 && gapple.pos[1] <= rightranlgec.pos[1] + 50)
+	{
+		gapple.pos[0] = rightranlgec.pos[0];
+		velocity[1] *= -1;
+	}
+
+
 	if(gapple.pos[1] >= WIN_HEIGHT -120 || gapple.pos[1] <= 20)
 		velocity[1] *= -1;
 	
