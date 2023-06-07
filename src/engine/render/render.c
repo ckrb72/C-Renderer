@@ -14,6 +14,16 @@ int render_init(Game_State* state, float width, float height)
     state->render.height = height;
     state->render.width = width;
     state->render.window = render_init_window(width, height);
+    
+    //Might not want to put this here. Don't really know right now.
+    //Possibly could have each entity store it in a material struct along with the other uniforms it has
+    //So could also put the model matrix in there and upadte it every time the scale or position is updated instead.
+    mat4x4_ortho(state->render.projection, 0, state->render.width, state->render.height, 0, -2, 2);
+
+    //So PNG's can have transparent backgrounds
+    //MUST BE CALLED AFTER render_init_window AS OTHERWISE OPENGL CONTEXT ISN'T SET UP
+    glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 //Draws the entity given to the screen

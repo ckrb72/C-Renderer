@@ -7,5 +7,5 @@ uniform sampler2D tex;
 
 void main()
 {
-    gl_Color = vec4(fragment_position, 1.0) * texture(tex, fragment_tex_coords);
+    gl_Color = texture(tex, fragment_tex_coords);
 }

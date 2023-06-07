@@ -19,35 +19,32 @@ bool should_quit = false;
 
 Game_State state;
 
-Entity entity;
-
-Entity entity2;
+vec2 velocity = {0.5, 0.5};
 
 int main(int argc, char* argv[])
 {
 	//Setup Render State
 	render_init(&state, WIN_WIDTH, WIN_HEIGHT);
 
-	Entity entity;
+	Entity gapple = entity_create((vec2){state.render.width / 2, state.render.height / 2}, (vec2){200, 200});
 
-	entity = entity_create((vec2){state.render.width / 2, state.render.height / 2}, (vec2){200, 200});
-	
-	entity.shader = shader_compile("./res/shaders/texture.vert", "./res/shaders/texture.frag");
+	gapple.shader = shader_compile("./res/shaders/texture.vert", "./res/shaders/texture.frag");
 
-	entity.texture = texture_load("./container.jpg", CG_JPG);
+	gapple.texture = texture_load("./gapple.png", CG_PNG);
 
-	entity_set_scale(&entity, (vec2){400, 400});
+	entity_set_scale(&gapple, (vec2){50, 50});
 
-	Entity e2 = entity_create((vec2){state.render.width / 2, state.render.height / 2}, (vec2){200, 200});
+	Entity grass_blocks[8];
 
-	e2.shader = entity.shader;
+	Texture grass_texture = texture_load("./grass.png", CG_PNG);
 
-	e2.texture = texture_load("./awesomeface.png", CG_PNG);
+	for(int i = 0; i < sizeof(grass_blocks) / sizeof(Entity); i++)
+	{
+		grass_blocks[i] = entity_create((vec2){50 + (i * 100), WIN_HEIGHT - 50}, (vec2){100, 100});
+		grass_blocks[i].shader = gapple.shader;
+		grass_blocks[i].texture = grass_texture;
+	}
 
-	entity_set_scale(&e2, (vec2){400, 400});
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//poll events
 	while(!should_quit)
@@ -65,30 +62,30 @@ int main(int argc, char* argv[])
 			}
 		}
 
-	entity.pos[0] += 0.5;
-	entity.pos[1] += 0.5;
-
-	if(e2.scale[0] < WIN_WIDTH)
-		e2.scale[0] += 0.5;
-	if(e2.scale[1] < WIN_HEIGHT)
-		e2.scale[1] += 0.5;
+	if(gapple.pos[0] >= WIN_WIDTH - 20 || gapple.pos[0] <= 20)
+		velocity[0] *= -1;
+	
+	if(gapple.pos[1] >= WIN_HEIGHT -120 || gapple.pos[1] <= 20)
+		velocity[1] *= -1;
+	
+	gapple.pos[0] += velocity[0];
+	gapple.pos[1] += velocity[1];
 
 	render_clear();
 
-	//Doesn't work right now for some reason. Need to debug this
-	render_draw(&entity);
+	render_draw(&gapple);
 
-	render_draw(&e2);
+	for(int i = 0; i < sizeof(grass_blocks) / sizeof(Entity); i++)
+	{
+		render_draw(&grass_blocks[i]);
+	}
 
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
 
 	}
 
-	texture_delete(&entity.texture);
-	texture_delete(&e2.texture);
-	shader_delete(entity.shader);
-	shader_delete(entity2.shader);
+	texture_delete(&gapple.texture);
 	
 	return 0;
 }
