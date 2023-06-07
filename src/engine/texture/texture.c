@@ -9,6 +9,7 @@
 
 
 //FIXME: Will need to make this static but need to clean up its uses in main first
+//FIXME: Doesn't work for all files so need to fix that
 Texture texture_load(const char* path, Texture_Type fileType)
 {
     Texture tex;
@@ -27,11 +28,11 @@ Texture texture_load(const char* path, Texture_Type fileType)
     {
         ERROR_RETURN((Texture){0}, "SOMETHING WENT REALLY FUCKING WRONG WITH LOADING THAT TEXTURE!\n");
     }
-
+    
     glGenTextures(1, &tex.gl_texture);
     glBindTexture(GL_TEXTURE_2D, tex.gl_texture);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

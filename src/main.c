@@ -11,6 +11,8 @@
 		- Rework shaders a little bit so that entites that need common shaders reuse them rather than recompiling them each time, wasting
 		memory on the gpu that could be saves fairly easily
 
+		- Change Entity struct to Render_Rect to make it more in line with what it is doing (I abstracted away too much and essentially made a game rather than a renderer)
+
 */
 
 #include <stdio.h>
@@ -43,7 +45,7 @@ int main(int argc, char* argv[])
 
 	Entity gapple = entity_create((vec2){state.render.width / 2, state.render.height / 2}, (vec2){200, 200});
 
-	texture_create(&gapple, "./gapple.png", CG_PNG);
+	texture_create(&gapple, "./awesomeface.png", CG_PNG);
 
 	entity_set_scale(&gapple, (vec2){50, 50});
 
