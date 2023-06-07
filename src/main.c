@@ -13,6 +13,8 @@
 
 		- Change Entity struct to Render_Rect to make it more in line with what it is doing (I abstracted away too much and essentially made a game rather than a renderer)
 
+		-FIX textures
+
 */
 
 #include <stdio.h>
@@ -60,6 +62,13 @@ int main(int argc, char* argv[])
 		texture_set(&grass_blocks[i], grass_texture);
 	}
 
+	Entity leftrectangel = entity_create((vec2){10, state.render.height / 2 -50}, (vec2){20, 100});
+
+	leftrectangel.shader=shader_compile("./res/shaders/line.vert", "./res/shaders/line.frag");
+
+	Entity rightranlgec = entity_create((vec2){state.render.width -10, state.render.height / 2 -50}, (vec2){20, 100});
+
+	rightranlgec.shader=leftrectangel.shader;
 
 	//poll events
 	while(!should_quit)
@@ -76,6 +85,18 @@ int main(int argc, char* argv[])
 					break;
 			}
 		}
+		int leftrectangeltop = leftrectangel.pos[1]+10;
+		int leftrectangelbot = leftrectangel.pos[1]-10;
+
+		int rightrectangeltop = rightranlgec.pos[1]+10;
+		int rightrectangelbot = rightranlgec.pos[1]-10;
+
+		if(gapple.pos[1] >= leftrectangeltop && gapple.pos[1] <= leftrectangelbot)
+			velocity[0] *= -1;
+
+		if(gapple.pos[1] >= rightrectangeltop && gapple.pos[1] <= rightrectangelbot)
+			velocity[0] *= -1;
+
 
 	if(gapple.pos[0] >= WIN_WIDTH - 20 || gapple.pos[0] <= 20)
 		velocity[0] *= -1;
@@ -96,12 +117,16 @@ int main(int argc, char* argv[])
 		render_draw(&grass_blocks[i]);
 	}
 
+	render_draw(&leftrectangel);
+	render_draw(&rightranlgec);
+
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
 
 	}
 
 	texture_delete(&gapple.texture);
+	texture_delete(&grass_blocks[0].texture);
 	
 	return 0;
 }
