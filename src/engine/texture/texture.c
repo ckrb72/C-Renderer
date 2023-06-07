@@ -1,9 +1,14 @@
 #include "texture.h"
+#include "texture_internal.h"
+#include "../shader/shader.h"
+
 #include <glad/glad.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 #include "../debug.h"
 
+
+//FIXME: Will need to make this static but need to clean up its uses in main first
 Texture texture_load(const char* path, Texture_Type fileType)
 {
     Texture tex;
@@ -39,6 +44,20 @@ Texture texture_load(const char* path, Texture_Type fileType)
     glBindTexture(GL_TEXTURE_2D, 0);
 
     return tex;
+}
+
+//TODO:
+//Right now this is just a wrapper but will eventually make it so that a default texture shader is also
+//set here and everything else that is needed as well
+void texture_create(Entity* entity, const char* path, Texture_Type fileType)
+{
+    entity->texture = texture_load(path, fileType);
+    entity->shader = shader_compile("./res/shaders/texture.vert", "./res/shaders/texture.frag");
+}
+
+void texture_set(Entity* entity, Texture texture)
+{
+    entity->texture = texture;
 }
 
 void texture_delete(Texture* tex)

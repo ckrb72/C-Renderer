@@ -28,9 +28,7 @@ int main(int argc, char* argv[])
 
 	Entity gapple = entity_create((vec2){state.render.width / 2, state.render.height / 2}, (vec2){200, 200});
 
-	gapple.shader = shader_compile("./res/shaders/texture.vert", "./res/shaders/texture.frag");
-
-	gapple.texture = texture_load("./gapple.png", CG_PNG);
+	texture_create(&gapple, "./gapple.png", CG_PNG);
 
 	entity_set_scale(&gapple, (vec2){50, 50});
 
@@ -41,8 +39,8 @@ int main(int argc, char* argv[])
 	for(int i = 0; i < sizeof(grass_blocks) / sizeof(Entity); i++)
 	{
 		grass_blocks[i] = entity_create((vec2){50 + (i * 100), WIN_HEIGHT - 50}, (vec2){100, 100});
-		grass_blocks[i].shader = gapple.shader;
-		grass_blocks[i].texture = grass_texture;
+		shader_set(&grass_blocks[i], gapple.shader);
+		texture_set(&grass_blocks[i], grass_texture);
 	}
 
 

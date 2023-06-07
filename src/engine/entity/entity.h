@@ -1,6 +1,6 @@
 #pragma once
 #include <linmath.h>
-#include "../texture/texture.h"
+#include "../texture/texture_internal.h"
 
 //Would like this to be in buffer.h but whenever I put
 //it there the whole thing FUCKING breaks????!!!!?!?!?

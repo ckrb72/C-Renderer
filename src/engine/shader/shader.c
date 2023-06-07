@@ -117,6 +117,11 @@ unsigned int shader_compile(const char* vert, const char* frag)
     return program;
 }
 
+void shader_set(Entity* entity, unsigned int shaderProgram)
+{
+    entity->shader = shaderProgram;
+}
+
 void shader_delete(unsigned int shader)
 {
     glDeleteProgram(shader);
