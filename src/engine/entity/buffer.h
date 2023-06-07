@@ -9,6 +9,8 @@ Buffer_State buffer_init()
     //(They get changed when the projection and model matricies are introduced in the shader)
     float vertices[] = 
     {
+                            //UV coords but might want to put this in separate buffer
+                            //to make it more dynamic
         -0.5, -0.5, 0.0,    0.0, 0.0,
         0.5, -0.5, 0.0,     1.0, 0.0,
         0.5, 0.5, 0.0,      1.0, 1.0,

@@ -1,3 +1,18 @@
+/*
+		To-Do List:
+		- Possibly rework the way entities work. As of right now they don't really make sense from a rendering perspective
+		and aren't general enough to really render anything
+			Might want to rethink the whole "entity" thing and reframe it more as a storage for buffers rather than an individual entity
+		
+		- Create IO system. SDL has it's own keyboard and mouse system but might be beneficial to make own
+
+		- Clean up the engine a little bit
+
+		- Rework shaders a little bit so that entites that need common shaders reuse them rather than recompiling them each time, wasting
+		memory on the gpu that could be saves fairly easily
+
+*/
+
 #include <stdio.h>
 #include <glad/glad.h>
 #include <stdbool.h>
@@ -73,6 +88,7 @@ int main(int argc, char* argv[])
 
 	render_draw(&gapple);
 
+	//Probably would want to batch render this but don't know how to make the vbo dynamic at this point
 	for(int i = 0; i < sizeof(grass_blocks) / sizeof(Entity); i++)
 	{
 		render_draw(&grass_blocks[i]);
