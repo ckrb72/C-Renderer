@@ -68,6 +68,11 @@ int main(int argc, char* argv[])
 	entity.pos[0] += 0.5;
 	entity.pos[1] += 0.5;
 
+	if(e2.scale[0] < WIN_WIDTH)
+		e2.scale[0] += 0.5;
+	if(e2.scale[1] < WIN_HEIGHT)
+		e2.scale[1] += 0.5;
+
 	render_clear();
 
 	//Doesn't work right now for some reason. Need to debug this
