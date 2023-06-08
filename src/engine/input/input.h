@@ -2,11 +2,11 @@
 
 typedef enum input_key
 {
-    INPUT_KEY_LEFT,
-    INPUT_KEY_RIGHT,
-    INPUT_KEY_UP,
-    INPUT_KEY_DOWN,
-    INPUT_KEY_ESCAPE
+    INPUT_KEY_LEFT = 'a',
+    INPUT_KEY_RIGHT = 'd',
+    INPUT_KEY_UP = 'w',
+    INPUT_KEY_DOWN = 's',
+    INPUT_KEY_ESCAPE = 27
 }Input_Key;
 
 typedef enum key_state

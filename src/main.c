@@ -29,6 +29,9 @@
 #include "engine/render/render.h"
 #include "engine/shader/shader.h"
 #include "engine/texture/texture.h"
+
+#include "engine/input/input.c"
+
 #include <linmath.h>
 
 #define WIN_WIDTH 800
@@ -45,11 +48,15 @@ int main(int argc, char* argv[])
 	//Setup Render State
 	render_init(&state, WIN_WIDTH, WIN_HEIGHT);
 
+	//Create initial Renders of Objects
 	Render_Rect rectangle = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){400, 400});
-
 	Render_Rect test = rectangle_create((vec2){50, 50}, (vec2){100, 100});
+	Render_Rect block1 = rectangle_create((vec2){150, 150}, (vec2){100, 100});
 
-	texture_create(&rectangle, "./grass.png", CG_PNG);
+
+	//Create Textures
+	texture_create(&rectangle, "./awesomeface.png", CG_PNG);
+	texture_create(&block1, "./gapple.png", CG_PNG);
 
 	//poll events
 	while(!should_quit)
@@ -70,6 +77,9 @@ int main(int argc, char* argv[])
 	rectangle.pos[0] += velocity[0];
 	rectangle.pos[1] += velocity[1];
 
+	//IDK
+	SDL_KeyboardEvent(keyboard);
+
 	if(rectangle.pos[0] >= WIN_WIDTH - rectangle.width / 2 || rectangle.pos[0] <= rectangle.width / 2)
 		velocity[0] *= -1;
 	
@@ -78,9 +88,11 @@ int main(int argc, char* argv[])
 
 	render_clear();
 
+	//Draw Objects
 	render_draw(&rectangle);
-
 	render_draw(&test);
+	render_draw(&block1);
+
 
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
