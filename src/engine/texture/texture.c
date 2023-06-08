@@ -50,13 +50,13 @@ Texture texture_load(const char* path, Texture_Type fileType)
 //TODO:
 //Right now this is just a wrapper but will eventually make it so that a default texture shader is also
 //set here and everything else that is needed as well
-void texture_create(Entity* entity, const char* path, Texture_Type fileType)
+void texture_create(Render_Rect* entity, const char* path, Texture_Type fileType)
 {
     entity->texture = texture_load(path, fileType);
     entity->shader = shader_compile("./res/shaders/texture.vert", "./res/shaders/texture.frag");
 }
 
-void texture_set(Entity* entity, Texture texture)
+void texture_set(Render_Rect* entity, Texture texture)
 {
     entity->texture = texture;
 }

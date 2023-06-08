@@ -1,5 +1,5 @@
 #pragma once
-#include "../entity/entity.h"
+#include "../rect/rect.h"
 
 /*
     Might want to do something like this that automatically assigns the texture without having to access the
@@ -11,9 +11,9 @@
     people don't accidentally call that instead of texture_create();
 */
 
-void texture_create(Entity* entity, const char* path, Texture_Type fileType);
+void texture_create(Render_Rect* entity, const char* path, Texture_Type fileType);
 
-void texture_set(Entity* entity, Texture texture);
+void texture_set(Render_Rect* entity, Texture texture);
 
 void texture_delete(Texture* tex);
 

@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
-#include "entity.h"
+#include "rect.h"
 
 Buffer_State buffer_init()
 {

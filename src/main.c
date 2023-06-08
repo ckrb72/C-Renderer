@@ -45,30 +45,7 @@ int main(int argc, char* argv[])
 	//Setup Render State
 	render_init(&state, WIN_WIDTH, WIN_HEIGHT);
 
-	Entity gapple = entity_create((vec2){state.render.width / 2, state.render.height / 2}, (vec2){200, 200});
-
-	texture_create(&gapple, "./awesomeface.png", CG_PNG);
-
-	entity_set_scale(&gapple, (vec2){50, 50});
-
-	Entity grass_blocks[8];
-
-	Texture grass_texture = texture_load("./grass.png", CG_PNG);
-
-	for(int i = 0; i < sizeof(grass_blocks) / sizeof(Entity); i++)
-	{
-		grass_blocks[i] = entity_create((vec2){50 + (i * 100), WIN_HEIGHT - 50}, (vec2){100, 100});
-		shader_set(&grass_blocks[i], gapple.shader);
-		texture_set(&grass_blocks[i], grass_texture);
-	}
-
-	Entity leftrectangel = entity_create((vec2){10, state.render.height / 2 -50}, (vec2){20, 100});
-
-	leftrectangel.shader=shader_compile("./res/shaders/line.vert", "./res/shaders/line.frag");
-
-	Entity rightranlgec = entity_create((vec2){state.render.width -10, state.render.height / 2 -50}, (vec2){20, 100});
-
-	rightranlgec.shader=leftrectangel.shader;
+	Render_Rect rectangle = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){400, 400});
 
 	//poll events
 	while(!should_quit)
@@ -85,53 +62,24 @@ int main(int argc, char* argv[])
 					break;
 			}
 		}
-		int leftrectangeltop = leftrectangel.pos[1]+10;
-		int leftrectangelbot = leftrectangel.pos[1]-10;
 
-		int rightrectangeltop = rightranlgec.pos[1]+10;
-		int rightrectangelbot = rightranlgec.pos[1]-10;
+	rectangle.pos[0] += velocity[0];
+	rectangle.pos[1] += velocity[1];
 
+	if(rectangle.pos[0] >= WIN_WIDTH - rectangle.width / 2 || rectangle.pos[0] <= rectangle.width / 2)
+		velocity[0] *= -1;
 	
-	//Need to fix collisions
-	if(gapple.pos[0] >= leftrectangel.pos[0] - 10 && gapple.pos[0] <= leftrectangel.pos[0] + 10 && gapple.pos[1] >= leftrectangel.pos[1] - 50 && gapple.pos[1] <= leftrectangel.pos[1] + 50)
-	{
-		gapple.pos[0] = leftrectangel.pos[0];
+	if(rectangle.pos[1] >= WIN_HEIGHT - rectangle.height / 2 || rectangle.pos[1] <= rectangle.height / 2)
 		velocity[1] *= -1;
-	}
-	
-	if(gapple.pos[0] >= rightranlgec.pos[0] - 10 && gapple.pos[0] <= rightranlgec.pos[0] + 10 && gapple.pos[1] >= rightranlgec.pos[1] - 50 && gapple.pos[1] <= rightranlgec.pos[1] + 50)
-	{
-		gapple.pos[0] = rightranlgec.pos[0];
-		velocity[1] *= -1;
-	}
-
-
-	if(gapple.pos[1] >= WIN_HEIGHT -120 || gapple.pos[1] <= 20)
-		velocity[1] *= -1;
-	
-	gapple.pos[0] += velocity[0];
-	gapple.pos[1] += velocity[1];
 
 	render_clear();
 
-	render_draw(&gapple);
-
-	//Probably would want to batch render this but don't know how to make the vbo dynamic at this point
-	for(int i = 0; i < sizeof(grass_blocks) / sizeof(Entity); i++)
-	{
-		render_draw(&grass_blocks[i]);
-	}
-
-	render_draw(&leftrectangel);
-	render_draw(&rightranlgec);
+	render_draw(&rectangle);
 
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
 
 	}
-
-	texture_delete(&gapple.texture);
-	texture_delete(&grass_blocks[0].texture);
 	
 	return 0;
 }

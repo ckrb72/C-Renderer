@@ -27,13 +27,13 @@ int render_init(Game_State* state, float width, float height)
 }
 
 //Draws the entity given to the screen
-void render_draw(Entity* entity)
+void render_draw(Render_Rect* entity)
 {
     //Uses the entity's shader
     glUseProgram(entity->shader);
 
-    if(entity->texture.gl_texture != 0)
-        glBindTexture(GL_TEXTURE_2D, entity->texture.gl_texture);
+    /*if(entity->texture.gl_texture != 0)
+        glBindTexture(GL_TEXTURE_2D, entity->texture.gl_texture); */
 
     //Need to make it so any projection matrix and model matrix can be used
     mat4x4 projection;
@@ -46,15 +46,15 @@ void render_draw(Entity* entity)
 
     //Creates the model matrix, translates it to the position and scales it then send it to the shader
     mat4x4_translate(model, entity->pos[0], entity->pos[1], 0);
-    mat4x4_scale_aniso(model, model, entity->scale[0], entity->scale[1], 1);
+    mat4x4_scale_aniso(model, model, entity->width, entity->height, 1);
 
     glUniformMatrix4fv(glGetUniformLocation(entity->shader, "model"), 1, GL_FALSE, &model[0][0]);
 
     //Binds the VAO so all the buffer data is loaded
-    glBindVertexArray(entity->buffer.vao);
+    glBindVertexArray(entity->buffer->vao);
 
     //Draws the entity
-    glDrawElements(GL_TRIANGLES, entity->buffer.index_size, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, entity->buffer->index_size, GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
 }
