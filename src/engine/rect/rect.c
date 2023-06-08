@@ -27,7 +27,8 @@ Render_Rect rectangle_create(vec2 position, vec2 scale)
 
         //Need to figure out how to reuse shaders that need to be reused
         //For example if two squares have the same shader, then we don't want to recompile them and waste space so we should figure out a way to reuse them
-        .shader = shader_compile("./res/shaders/default.vert", "./res/shaders/default.frag")
+        .shader = shader_compile("./res/shaders/default.vert", "./res/shaders/default.frag"),
+        .texture = 0
     };
 
     rectangle_internal.count++;

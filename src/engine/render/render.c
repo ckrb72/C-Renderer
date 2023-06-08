@@ -32,8 +32,8 @@ void render_draw(Render_Rect* entity)
     //Uses the entity's shader
     glUseProgram(entity->shader);
 
-    /*if(entity->texture.gl_texture != 0)
-        glBindTexture(GL_TEXTURE_2D, entity->texture.gl_texture); */
+    if(entity->texture.gl_texture != 0)
+        glBindTexture(GL_TEXTURE_2D, entity->texture.gl_texture);
 
     //Need to make it so any projection matrix and model matrix can be used
     mat4x4 projection;

@@ -47,6 +47,10 @@ int main(int argc, char* argv[])
 
 	Render_Rect rectangle = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){400, 400});
 
+	Render_Rect test = rectangle_create((vec2){50, 50}, (vec2){100, 100});
+
+	texture_create(&rectangle, "./grass.png", CG_PNG);
+
 	//poll events
 	while(!should_quit)
 	{
@@ -75,6 +79,8 @@ int main(int argc, char* argv[])
 	render_clear();
 
 	render_draw(&rectangle);
+
+	render_draw(&test);
 
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
