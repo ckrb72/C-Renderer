@@ -29,8 +29,7 @@
 #include "engine/render/render.h"
 #include "engine/shader/shader.h"
 #include "engine/texture/texture.h"
-
-#include "engine/input/input.c"
+#include "engine/input/input.h"
 
 #include <linmath.h>
 
@@ -42,6 +41,9 @@ bool should_quit = false;
 Game_State state;
 
 vec2 velocity = {0.5, 0.5};
+
+Key_State keyboard_input;
+Key_State left_input;
 
 int main(int argc, char* argv[])
 {
@@ -73,6 +75,30 @@ int main(int argc, char* argv[])
 					break;
 			}
 		}
+
+	input_update(&state);
+
+	//Shows difference between pressed and held
+
+	//Pressed only happens once
+	if(state.input.left == KS_HELD)
+		test.pos[0] -= 0.75;
+	
+	//Held happens continually each frame
+	if(state.input.right == KS_HELD)
+		test.pos[0] += 0.75;
+
+	if(state.input.down == KS_HELD)
+		test.pos[1] += 0.75;
+	
+	if(state.input.up == KS_HELD)
+		test.pos[1] -= 0.75;
+
+	//Temporary Keyboard Input Handling
+	//Will eventually put this in api but just need to figure out how it works first
+
+	if(state.input.escape == KS_PRESSED)
+		should_quit = true;
 
 	rectangle.pos[0] += velocity[0];
 	rectangle.pos[1] += velocity[1];
