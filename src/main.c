@@ -1,17 +1,11 @@
 /*
 		To-Do List:
-		- Possibly rework the way entities work. As of right now they don't really make sense from a rendering perspective
-		and aren't general enough to really render anything
-			Might want to rethink the whole "entity" thing and reframe it more as a storage for buffers rather than an individual entity
-		
-		- Create IO system. SDL has it's own keyboard and mouse system but might be beneficial to make own
+		- Finish IO System (Add config files and controller components)
 
 		- Clean up the engine a little bit
 
 		- Rework shaders a little bit so that entites that need common shaders reuse them rather than recompiling them each time, wasting
 		memory on the gpu that could be saves fairly easily
-
-		- Change Entity struct to Render_Rect to make it more in line with what it is doing (I abstracted away too much and essentially made a game rather than a renderer)
 
 		-FIX textures
 
@@ -86,8 +80,6 @@ int main(int argc, char* argv[])
 		}
 
 	input_update(&state);
-
-	//Shows difference between pressed and held
 
 	if(state.input.space == KS_PRESSED)
 		pause = !pause;
