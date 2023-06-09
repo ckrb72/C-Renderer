@@ -7,7 +7,15 @@
 		- Rework shaders a little bit so that entites that need common shaders reuse them rather than recompiling them each time, wasting
 		memory on the gpu that could be saves fairly easily
 
-		-FIX textures
+		- FIX textures
+
+		- Create Controller functionality that allows for multiple configs for multiple players
+
+		- Add wireframe viewer
+
+		- Add UI and debug information
+
+		- Maybe add circles
 
 */
 
@@ -51,14 +59,18 @@ int main(int argc, char* argv[])
 
 	srand(time(0));
 
-	int x = rand() % 100;
+	float x = (float)((rand() % 100) + 20);
 
-	int y = rand() % 100;
+	float y = (float)((rand() % 100) + 20);
 
-	printf("X: %d, Y: %d\n", x, y);
+	velocity[0] = x / 50;
+	velocity[1] = y / 50;
+
+	printf("X: %f, Y: %f\n", x, y);
 
 
 	Render_Rect ball = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){20, 20});
+	texture_create(&ball, "./awesomeface.png", CG_PNG);
 
 
 	int pause = 0;
@@ -90,18 +102,15 @@ int main(int argc, char* argv[])
 	if(!pause)
 	{
 		if(leftPaddle.pos[1] > 50 && (state.input.up == KS_HELD || state.input.up == KS_PRESSED))
-			leftPaddle.pos[1] -= 1.25;
+			leftPaddle.pos[1] -= 1.75;
 		
 		if(leftPaddle.pos[1] < (WIN_HEIGHT - 50) && (state.input.down == KS_HELD || state.input.up == KS_PRESSED))
-			leftPaddle.pos[1] += 1.25;
+			leftPaddle.pos[1] += 1.75;
 
 		ball.pos[0] += velocity[0];
 		ball.pos[1] += velocity[1];
 
-		if(ball.pos[0] >= WIN_WIDTH - 10 || ball.pos[1] <= 10)
-		{
-			velocity[0] *= -1;
-		}
+		//Do collisions between ball and paddles
 
 		if(ball.pos[1] >= WIN_HEIGHT - 10 || ball.pos[1] <= 10)
 			velocity[1] *= -1;
