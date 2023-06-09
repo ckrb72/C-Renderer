@@ -27,4 +27,5 @@ typedef struct input_state
     Key_State up;
     Key_State down;
     Key_State escape;
+    Key_State space;
 }Input_State;

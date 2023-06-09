@@ -24,6 +24,7 @@
 #include <SDL2/SDL.h>
 #include <linmath.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "engine/game_state.h"
 #include "engine/render/render.h"
@@ -42,23 +43,31 @@ Game_State state;
 
 vec2 velocity = {0.5, 0.5};
 
-Key_State keyboard_input;
-Key_State left_input;
-
 int main(int argc, char* argv[])
 {
 	//Setup Render State
 	render_init(&state, WIN_WIDTH, WIN_HEIGHT);
 
 	//Create initial Renders of Objects
-	Render_Rect rectangle = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){400, 400});
-	Render_Rect test = rectangle_create((vec2){50, 50}, (vec2){100, 100});
-	Render_Rect block1 = rectangle_create((vec2){150, 150}, (vec2){100, 100});
+	Render_Rect leftPaddle = rectangle_create((vec2){10, WIN_HEIGHT / 2}, (vec2){20, 100});
+	Render_Rect rightPaddle = rectangle_create((vec2){WIN_WIDTH - 10, WIN_HEIGHT / 2}, (vec2){20, 100});
+
+	texture_create(&leftPaddle, "./grass.png", CG_PNG);
+	texture_create(&rightPaddle, "./grass.png", CG_PNG);
+
+	srand(time(0));
+
+	int x = rand() % 100;
+
+	int y = rand() % 100;
+
+	printf("X: %d, Y: %d\n", x, y);
 
 
-	//Create Textures
-	texture_create(&rectangle, "./awesomeface.png", CG_PNG);
-	texture_create(&block1, "./gapple.png", CG_PNG);
+	Render_Rect ball = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){20, 20});
+
+
+	int pause = 0;
 
 	//poll events
 	while(!should_quit)
@@ -80,46 +89,39 @@ int main(int argc, char* argv[])
 
 	//Shows difference between pressed and held
 
-	//Pressed only happens once
-	if(state.input.left == KS_HELD)
-		test.pos[0] -= 0.75;
+	if(state.input.space == KS_PRESSED)
+		pause = !pause;
 	
-	//Held happens continually each frame
-	if(state.input.right == KS_HELD)
-		test.pos[0] += 0.75;
-
-	if(state.input.down == KS_HELD)
-		test.pos[1] += 0.75;
-	
-	if(state.input.up == KS_HELD)
-		test.pos[1] -= 0.75;
-
-	//Temporary Keyboard Input Handling
-	//Will eventually put this in api but just need to figure out how it works first
-
 	if(state.input.escape == KS_PRESSED)
 		should_quit = true;
 
-	rectangle.pos[0] += velocity[0];
-	rectangle.pos[1] += velocity[1];
+	if(!pause)
+	{
+		if(leftPaddle.pos[1] > 50 && (state.input.up == KS_HELD || state.input.up == KS_PRESSED))
+			leftPaddle.pos[1] -= 1.25;
+		
+		if(leftPaddle.pos[1] < (WIN_HEIGHT - 50) && (state.input.down == KS_HELD || state.input.up == KS_PRESSED))
+			leftPaddle.pos[1] += 1.25;
 
-	//IDK
-	SDL_KeyboardEvent(keyboard);
+		ball.pos[0] += velocity[0];
+		ball.pos[1] += velocity[1];
 
-	if(rectangle.pos[0] >= WIN_WIDTH - rectangle.width / 2 || rectangle.pos[0] <= rectangle.width / 2)
-		velocity[0] *= -1;
-	
-	if(rectangle.pos[1] >= WIN_HEIGHT - rectangle.height / 2 || rectangle.pos[1] <= rectangle.height / 2)
-		velocity[1] *= -1;
+		if(ball.pos[0] >= WIN_WIDTH - 10 || ball.pos[1] <= 10)
+		{
+			velocity[0] *= -1;
+		}
+
+		if(ball.pos[1] >= WIN_HEIGHT - 10 || ball.pos[1] <= 10)
+			velocity[1] *= -1;
+	}
 
 	render_clear();
 
 	//Draw Objects
-	render_draw(&rectangle);
-	render_draw(&test);
-	render_draw(&block1);
+	render_draw(&leftPaddle);
+	render_draw(&rightPaddle);
 
-
+	render_draw(&ball);
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
 

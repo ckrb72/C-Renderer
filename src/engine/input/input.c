@@ -47,4 +47,5 @@ void input_update(Game_State* state)
     update_key_state(keyboard_state[SDL_GetScancodeFromName("A")], &state->input.left);
     update_key_state(keyboard_state[SDL_GetScancodeFromName("S")], &state->input.down);
     update_key_state(keyboard_state[SDL_GetScancodeFromName("w")], &state->input.up);
+    update_key_state(keyboard_state[SDL_GetScancodeFromName("Space")], &state->input.space);
 }
