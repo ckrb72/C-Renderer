@@ -8,6 +8,8 @@
 #include "../debug.h"
 
 
+//TODO: Make it so multiple textures can be used. This can be done through uniforms and binding the different textures via GL_TEXTURE0 ...
+
 //FIXME: Will need to make this static but need to clean up its uses in main first
 //FIXME: Doesn't work for all files so need to fix that
 Texture texture_load(const char* path, Texture_Type fileType)

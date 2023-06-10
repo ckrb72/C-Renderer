@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 //Initializes the render state
-int render_init(Game_State* state, float width, float height)
+int render_init(Renderer* state, float width, float height)
 {
     state->render.height = height;
     state->render.width = width;
@@ -60,7 +60,7 @@ void render_draw(Render_Rect* entity)
 }
 
 //Swaps the buffer, displaying what was just drawn to the screen using render_draw()
-void render_display(Game_State* state)
+void render_display(Renderer* state)
 {
     SDL_GL_SwapWindow(state->render.window);
 }

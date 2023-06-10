@@ -6,4 +6,4 @@
 #include "../game_state.h"
 
 
-void input_update(Game_State* state);
+void input_update(Renderer* state);

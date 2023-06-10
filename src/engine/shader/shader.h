@@ -16,3 +16,6 @@ void shader_set(Render_Rect* entity, unsigned int shaderProgram);
 //objects. Or maybe a free_entity() function that implicitly calls this function
 //to delete the shader if it hasn't already been deleted by a different object with the same shader
 void shader_delete(unsigned int shader);
+
+void shader_setUniform1i(unsigned int shader, const char* name, int value);
+void shader_setMat4fv(unsigned int shader, const char* name, mat4x4 value);

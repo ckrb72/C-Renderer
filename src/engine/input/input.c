@@ -33,7 +33,7 @@ static void update_key_state(uint8_t current_state, Key_State* key_state)
 }
 
 //Will fill this out eventually
-void input_update(Game_State* state)
+void input_update(Renderer* state)
 {
 
     //SDL_GetKeyboardState returns an array of integers that define all the states of each key on the keyboard

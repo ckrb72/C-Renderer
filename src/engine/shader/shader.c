@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "../debug.h"
 
+//Fix this to use new format
 static char* load_shader(const char* path)
 {
     //Holds the data
@@ -125,4 +126,14 @@ void shader_set(Render_Rect* entity, unsigned int shaderProgram)
 void shader_delete(unsigned int shader)
 {
     glDeleteProgram(shader);
+}
+
+void shader_setUniform1i(unsigned int shader, const char* name, int value)
+{
+    glUniform1i(glGetUniformLocation(shader, name), value);
+}
+
+void shader_setMat4fv(unsigned int shader, const char* name, mat4x4 value)
+{
+    glUniformMatrix4fv(glGetUniformLocation(shader, name), 1, GL_FALSE, &value[0][0]);
 }
