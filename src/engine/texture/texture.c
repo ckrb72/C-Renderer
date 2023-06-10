@@ -55,7 +55,7 @@ Texture texture_load(const char* path, Texture_Type fileType)
 void texture_create(Render_Rect* entity, const char* path, Texture_Type fileType)
 {
     entity->texture = texture_load(path, fileType);
-    entity->shader = shader_compile("./res/shaders/texture.vert", "./res/shaders/texture.frag");
+    entity->shader = shader_set_texture();
 }
 
 void texture_set(Render_Rect* entity, Texture texture)

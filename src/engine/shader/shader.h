@@ -1,6 +1,12 @@
 #pragma once
 #include "../rect/rect.h"
 
+typedef struct shaders
+{
+    unsigned int regular;
+    unsigned int texture;
+}Shaders;
+
 //Might not use this function
 //Have to see how I want to lay this out
 void shader_init();
@@ -19,3 +25,7 @@ void shader_delete(unsigned int shader);
 
 void shader_setUniform1i(unsigned int shader, const char* name, int value);
 void shader_setMat4fv(unsigned int shader, const char* name, mat4x4 value);
+
+//Will definitely want to figure out a better way to do this in the future but for now this works
+unsigned int shader_set_default();
+unsigned int shader_set_texture();

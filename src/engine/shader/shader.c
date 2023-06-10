@@ -4,6 +4,14 @@
 #include <stdlib.h>
 #include "../debug.h"
 
+static Shaders shaders = {0};
+
+void shader_init()
+{
+    shaders.regular = shader_compile("./res/shaders/default.vert", "./res/shaders/default.frag");
+    shaders.texture = shader_compile("./res/shaders/texture.vert", "./res/shaders/texture.frag");
+}
+
 //Fix this to use new format
 static char* load_shader(const char* path)
 {
@@ -116,6 +124,16 @@ unsigned int shader_compile(const char* vert, const char* frag)
 
     //return shader
     return program;
+}
+
+unsigned int shader_set_default()
+{
+    return shaders.regular;
+}
+
+unsigned int shader_set_texture()
+{
+    return shaders.texture;
 }
 
 void shader_set(Render_Rect* entity, unsigned int shaderProgram)

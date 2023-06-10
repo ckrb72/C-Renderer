@@ -43,7 +43,13 @@ int main(int argc, char* argv[])
 	//Setup Render State
 	render_init(&state, WIN_WIDTH, WIN_HEIGHT);
 
+	shader_init();
+
 	Render_Rect box = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){100, 100});
+
+	Render_Rect image = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){100, 100});
+
+	texture_create(&image, "./res/textures/awesomeface.png", CG_PNG);
 
 	int pause = 0;
 
@@ -95,6 +101,7 @@ int main(int argc, char* argv[])
 
 	//Draw Objects
 	render_draw(&box);
+	render_draw(&image);
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
 
