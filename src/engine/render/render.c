@@ -8,12 +8,24 @@
 
 #include <stdio.h>
 
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 //Prototypes of render functions
 static void render_quad(void* data);
 static void render_circle(void* data);
 
 //Array of function pointers to render functions
 static void (*func_ptr_arr[3])(void* data) = {0, render_quad, render_circle};
+
+
+//Want to put the static buffer in here so the quad struct doesn't need to know anything about buffers at all
+//This way we can just have a position, size, texture, and shader and not have to keep a reference to the buffer in the actual struct itself
+//Buffer for quads
+//static buffer_t quad_buffer = {0};
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+//Main render functions
 
 //Initializes the render state
 int render_init(Renderer* state, float width, float height)
@@ -56,7 +68,7 @@ void render_clear()
 
 
 //Individual Render Functions
-/*--------------------------------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
 //OpenGL calls for rendering a rectangle

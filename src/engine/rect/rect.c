@@ -7,7 +7,7 @@ static Rectangle_State_Internal rectangle_internal = {0};
 
 static void rectangle_state_init()
 {
-    rectangle_internal.rect_buffer = buffer_init();
+    rectangle_internal.rect_buffer = rect_buffer_init();
 }
 
 //Creates the entity with the given position

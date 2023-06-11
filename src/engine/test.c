@@ -1,14 +1,17 @@
 /*
 		To-Do List:
+
+		- MOST IMPORTANT: Batch Renderer to cut back on draw calls
+
+		- Add Benchmarking to see why so much cpu is being used up
+
+		- Add animation support by allowing rects to only render part of textures (allows support for sprite sheets, making it easy and efficient to support animations)
 		
 		- Get Camera working so can move around the world
 
 		- Finish IO System (Add config files and controller components)
 
 		- Clean up the engine a little bit
-
-		- Rework shaders a little bit so that entites that need common shaders reuse them rather than recompiling them each time, wasting
-		memory on the gpu that could be saves fairly easily
 
 		- FIX textures and add support for multiple textures
 
@@ -26,8 +29,6 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include <stdlib.h>
-#include <time.h>
 
 #include "engine.h"
 
@@ -51,7 +52,10 @@ int main(int argc, char* argv[])
 
 	Render_Rect image = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){100, 100});
 
-	texture_create(&image, "./res/textures/awesomeface.png", CG_PNG);
+	//Sprite Sheet
+	texture_create(&image, "./char_blue.png", CG_PNG);
+
+	//Need to make clipping rect somehow and upload it with correct uv coords
 
 	int pause = 0;
 

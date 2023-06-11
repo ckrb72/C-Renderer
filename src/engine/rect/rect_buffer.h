@@ -2,7 +2,7 @@
 #include <glad/glad.h>
 #include "rect.h"
 
-buffer_r buffer_init()
+buffer_r rect_buffer_init()
 {
 
     //Sets basic vertex positions
@@ -57,6 +57,10 @@ buffer_r buffer_init()
 
     //Unbinds the VAO so nothing accidentally changes it
     glBindVertexArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     //Records the size of the index buffer
     buffer.index_size = sizeof(indices);
