@@ -3,15 +3,11 @@
 #include "../game_state.h"
 #include "../rect/rect.h"
 
-//Can either use function pointers and enum with void* to allow for drawing anything
-
-//Or do the following with enums and unions
-
-//Defines the types available
-typedef enum
+typedef enum render_type
 {
-    RENDER_TYPE_UNKOWN,
-    RENDER_RECT
+    CG_UNKNOWN,
+    CG_QUAD,
+    CG_CIRCLE
 }Render_Type;
 
 //Renderable object
@@ -36,5 +32,4 @@ int render_init(Renderer* state, float width, float height);
 void render_display(Renderer* state);
 void render_clear();
 
-//TODO: Need to update this to use Renderable* instead of Render_Rect*
-void render_draw(Render_Rect* entity);
+void render_draw(void* data, Render_Type type);

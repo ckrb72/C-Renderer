@@ -1,4 +1,4 @@
-#include "buffer.h"
+#include "rect_buffer.h"
 #include "rect.h"
 #include "../shader/shader.h"
 #include <stdio.h>
@@ -36,13 +36,13 @@ Render_Rect rectangle_create(vec2 position, vec2 scale)
     return quad;
 }
 
-void entity_set_scale(Render_Rect* quad, vec2 scale)
+void rectangle_set_scale(Render_Rect* quad, vec2 scale)
 {
     quad->width = scale[0];
     quad->height = scale[1];
 }
 
-void entity_set_position(Render_Rect* quad, vec2 position)
+void rectangle_set_position(Render_Rect* quad, vec2 position)
 {
     quad->pos[0] = position[0];
     quad->pos[1] = position[1];

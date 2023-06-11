@@ -5,7 +5,7 @@
 
 typedef struct render_rect
 {
-    Buffer_State* buffer;
+    buffer_r* buffer;
 
     unsigned int width, height;
 
@@ -20,8 +20,8 @@ typedef struct render_rect
 //Might want to change this to return a pointer at some point but fine for now
 Render_Rect rectangle_create(vec2 position, vec2 scale);
 
-void entity_set_scale(Render_Rect* quad, vec2 scale);
+void rectangle_set_scale(Render_Rect* quad, vec2 scale);
 
-void entity_set_position(Render_Rect* quad, vec2 position);
+void rectangle_set_position(Render_Rect* quad, vec2 position);
 
 //vec2 entity_get_scale(Entity* entity);

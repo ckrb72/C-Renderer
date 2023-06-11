@@ -8,6 +8,13 @@
 
 #include <stdio.h>
 
+//Prototypes of render functions
+static void render_quad(void* data);
+static void render_circle(void* data);
+
+//Array of function pointers to render functions
+static void (*func_ptr_arr[3])(void* data) = {0, render_quad, render_circle};
+
 //Initializes the render state
 int render_init(Renderer* state, float width, float height)
 {
@@ -27,8 +34,36 @@ int render_init(Renderer* state, float width, float height)
 }
 
 //Draws the entity given to the screen
-void render_draw(Render_Rect* entity)
+void render_draw(void* data, Render_Type type)
 {
+    //Indexes into the function pointer array, "dereferencing", or calling, the function at the index given by the type
+    (*func_ptr_arr[type])(data);
+}
+
+//Swaps the buffer, displaying what was just drawn to the screen using render_draw()
+void render_display(Renderer* state)
+{
+    SDL_GL_SwapWindow(state->render.window);
+}
+
+//Clears the color buffer and sets the background color
+//Gets the renderer ready for the next frame (Want to call at the beginning of each frame)
+void render_clear()
+{
+    glClearColor(0.3, 0.3, 0.3, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+
+//Individual Render Functions
+/*--------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+//OpenGL calls for rendering a rectangle
+static void render_quad(void* data)
+{
+
+    Render_Rect* entity = (Render_Rect*)data;
     //Uses the entity's shader
     glUseProgram(entity->shader);
 
@@ -59,16 +94,8 @@ void render_draw(Render_Rect* entity)
     glBindVertexArray(0);
 }
 
-//Swaps the buffer, displaying what was just drawn to the screen using render_draw()
-void render_display(Renderer* state)
+//OpenGL calls for rendering a circle
+static void render_circle(void* data)
 {
-    SDL_GL_SwapWindow(state->render.window);
-}
-
-//Clears the color buffer and sets the background color
-//Gets the renderer ready for the next frame (Want to call at the beginning of each frame)
-void render_clear()
-{
-    glClearColor(0.3, 0.3, 0.3, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
+    printf("NOT IMPLEMENTED YET\n");
 }

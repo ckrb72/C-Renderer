@@ -1,16 +1,16 @@
 #pragma once
 #include <stdint.h>
 
-typedef struct buffer_state
+typedef struct
 {
     unsigned int vao, vbo, ebo;
 
     unsigned int index_size;
-}Buffer_State;
+}buffer_r;
 
 typedef struct rectangle_state_internal
 {
-    Buffer_State rect_buffer;
+    buffer_r rect_buffer;
 
     uint32_t count;
 

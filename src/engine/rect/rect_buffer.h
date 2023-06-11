@@ -2,7 +2,7 @@
 #include <glad/glad.h>
 #include "rect.h"
 
-Buffer_State buffer_init()
+buffer_r buffer_init()
 {
 
     //Sets basic vertex positions
@@ -28,7 +28,7 @@ Buffer_State buffer_init()
 
 
 
-    Buffer_State buffer;
+    buffer_r buffer;
 
     //Generates the VAO, VBO, and EBO
     glGenVertexArrays(1, &buffer.vao);
@@ -50,6 +50,8 @@ Buffer_State buffer_init()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
+    //Just so it's clear what's going on, the last argument is a void pointer that holds the address of the offset, so in this case the pointer would
+    //be the address 24 because 3 * 8 is 24. NOTE: It is the address that is 24, not the value of the pointer
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 

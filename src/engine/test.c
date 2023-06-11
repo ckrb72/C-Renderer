@@ -97,13 +97,23 @@ int main(int argc, char* argv[])
 			
 		if(box.pos[1] < WIN_HEIGHT - (box.height / 2) && (state.input.down == KS_HELD || state.input.down == KS_PRESSED))
 			box.pos[1] += 1.75;
+		
+		image.pos[0] += velocity[0];
+		image.pos[1] += velocity[1];
+
+		if(image.pos[0] < image.width / 2 || image.pos[0] > WIN_WIDTH - (image.width / 2))
+			velocity[0] *= -1;
+		
+		if(image.pos[1] < image.height / 2 || image.pos[1] > WIN_HEIGHT - (image.width / 2))
+			velocity[1] *= -1;
 	}
 
 	render_clear();
 
 	//Draw Objects
-	render_draw(&box);
-	render_draw(&image);
+	render_draw(&box, CG_QUAD);
+	render_draw(&image, CG_QUAD);
+	
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
 
