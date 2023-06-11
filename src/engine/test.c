@@ -17,6 +17,8 @@
 
 		- Create Controller functionality that allows for multiple configs for multiple players
 
+		- Add ECS system for managing entities. Might want to put this in a game rather than the renderer
+
 		- Add wireframe viewer
 
 		- Add UI and debug information
@@ -30,6 +32,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+//Main headerfile for engine
 #include "engine.h"
 
 #define WIN_WIDTH 800

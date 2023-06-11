@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL2/SDL.h>
-#include "../game_state.h"
+#include "../engine_state.h"
 #include "../rect/rect.h"
 
 typedef enum render_type

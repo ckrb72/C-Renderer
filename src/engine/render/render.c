@@ -4,7 +4,7 @@
 #include "render.h"
 #include "render_internal.h"
 
-#include "../game_state.h"
+#include "../engine_state.h"
 
 #include <stdio.h>
 

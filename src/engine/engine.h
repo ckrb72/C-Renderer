@@ -7,6 +7,10 @@
 #include "shader/shader.h"
 #include "texture/texture.h"
 #include "input/input.h"
-#include "game_state.h"
+#include "engine_state.h"
 
 #include <linmath.h>
+
+
+#define CG_TRUE 1
+#define CG_FALSE 0
