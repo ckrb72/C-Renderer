@@ -17,11 +17,28 @@ static void render_circle(void* data);
 //Array of function pointers to render functions
 static void (*func_ptr_arr[3])(void* data) = {0, render_quad, render_circle};
 
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+//Buffers
 
 //Want to put the static buffer in here so the quad struct doesn't need to know anything about buffers at all
 //This way we can just have a position, size, texture, and shader and not have to keep a reference to the buffer in the actual struct itself
 //Buffer for quads
 //static buffer_t quad_buffer = {0};
+
+
+typedef struct
+{
+    unsigned int vao, vbo, ebo;
+
+    unsigned int index_size;
+}buffer_t;
+
+static buffer_t quad_buffer = {0};
+
+static buffer_t buffer_init(float* vertexBuffer, unsigned int vertexSize, unsigned int* elementBuffer, unsigned int elementSize);
+
+static void quad_buffer_init();
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -43,6 +60,8 @@ int render_init(Renderer* state, float width, float height)
     //MUST BE CALLED AFTER render_init_window AS OTHERWISE OPENGL CONTEXT ISN'T SET UP
     glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    quad_buffer_init();
 }
 
 //Draws the entity given to the screen
@@ -98,10 +117,10 @@ static void render_quad(void* data)
     glUniformMatrix4fv(glGetUniformLocation(entity->shader, "model"), 1, GL_FALSE, &model[0][0]);
 
     //Binds the VAO so all the buffer data is loaded
-    glBindVertexArray(entity->buffer->vao);
+    glBindVertexArray(quad_buffer.vao);
 
     //Draws the entity
-    glDrawElements(GL_TRIANGLES, entity->buffer->index_size, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, quad_buffer.index_size, GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
 }
@@ -110,4 +129,60 @@ static void render_quad(void* data)
 static void render_circle(void* data)
 {
     printf("NOT IMPLEMENTED YET\n");
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+//Buffer Initialization Functions
+
+static buffer_t buffer_init(float* vertexBuffer, unsigned int vertexSize, unsigned int* elementBuffer, unsigned int elementSize)
+{
+    buffer_t buffer = {0};
+
+    glGenVertexArrays(1, &buffer.vao);
+    glGenBuffers(1, &buffer.vbo);
+    glGenBuffers(1, &buffer.ebo);
+
+    glBindVertexArray(buffer.vao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, buffer.vbo);
+    glBufferData(GL_ARRAY_BUFFER, vertexSize, vertexBuffer, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementSize, elementBuffer, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    glBindVertexArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    
+    buffer.index_size = elementSize;
+
+    return buffer;
+}
+
+static void quad_buffer_init()
+{
+    float vertices[] = 
+    {
+        -0.5, -0.5, 0.0,    0.0, 0.0,
+        0.5, -0.5, 0.0,     1.0, 0.0,
+        0.5, 0.5, 0.0,      1.0, 1.0,
+        -0.5, 0.5, 0.0,     0.0, 1.0
+    };
+
+    unsigned int indices[] = 
+    {
+        0, 1, 2,
+        2, 3, 0
+    };
+
+    quad_buffer = buffer_init(vertices, sizeof(vertices), indices, sizeof(indices));
 }

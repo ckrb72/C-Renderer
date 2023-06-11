@@ -10,6 +10,16 @@ typedef enum render_type
     CG_CIRCLE
 }Render_Type;
 
+int render_init(Renderer* state, float width, float height);
+void render_display(Renderer* state);
+void render_clear();
+
+void render_draw(void* data, Render_Type type);
+
+
+/*  Not using this but this is another way to do the render_draw function
+    By having a wrapper struct that has a union of every possible type we need,
+    we can just convert the structs to renderables and then pass the renderables into the funcitons
 //Renderable object
 typedef struct renderable
 {
@@ -25,11 +35,4 @@ typedef struct renderable
       //Render_Circle circle;
     };
 }Renderable;
-
-//Only problem is figuring out how to do all of the other functions as well
-
-int render_init(Renderer* state, float width, float height);
-void render_display(Renderer* state);
-void render_clear();
-
-void render_draw(void* data, Render_Type type);
+*/

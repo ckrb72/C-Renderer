@@ -1,12 +1,9 @@
 #pragma once
 #include <linmath.h>
 #include "../texture/texture_internal.h"
-#include "rect_internal.h"
 
 typedef struct render_rect
 {
-    buffer_r* buffer;
-
     unsigned int width, height;
 
     vec2 pos;
