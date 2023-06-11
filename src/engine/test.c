@@ -1,7 +1,7 @@
 /*
 		To-Do List:
 		
-		-Get Camera working so can move around the world
+		- Get Camera working so can move around the world
 
 		- Finish IO System (Add config files and controller components)
 
@@ -19,6 +19,8 @@
 		- Add UI and debug information
 
 		- Maybe add circles
+
+		- Document API
 
 */
 
