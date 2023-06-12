@@ -115,9 +115,7 @@ int main(int argc, char* argv[])
 	render_clear();
 
 	//Draw Objects
-	render_draw(&box, CG_QUAD);
 	render_draw(&image, CG_QUAD);
-	render_draw(&face, CG_QUAD);
 	
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);
