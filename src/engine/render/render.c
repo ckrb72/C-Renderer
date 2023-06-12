@@ -170,12 +170,15 @@ static buffer_t buffer_init(float* vertexBuffer, unsigned int vertexSize, unsign
 
 static void quad_buffer_init()
 {
+
+    //Might want to change this back to what it normally was
+    //For some reason moving feels weird now but might just be a placebo
     float vertices[] = 
     {
-        -0.5, -0.5, 0.0,    0.0, 0.0,
-        0.5, -0.5, 0.0,     1.0, 0.0,
-        0.5, 0.5, 0.0,      1.0, 1.0,
-        -0.5, 0.5, 0.0,     0.0, 1.0
+        0.0, 0.0, 0.0,    0.0, 0.0,
+        1.0, 0.0, 0.0,     1.0, 0.0,
+        1.0, 1.0, 0.0,      1.0, 1.0,
+        0.0, 1.0, 0.0,     0.0, 1.0
     };
 
     unsigned int indices[] = 

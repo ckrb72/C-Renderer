@@ -54,9 +54,9 @@ int main(int argc, char* argv[])
 
 	shader_init();
 
-	Render_Rect box = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){100, 100});
+	Render_Rect box = rectangle_create((vec2){(WIN_WIDTH / 2) - 50, (WIN_HEIGHT / 2) - 50}, (vec2){100, 100});
 
-	Render_Rect image = rectangle_create((vec2){WIN_WIDTH / 2, WIN_HEIGHT / 2}, (vec2){100, 100});
+	Render_Rect image = rectangle_create((vec2){(WIN_WIDTH / 2) - 50, (WIN_HEIGHT / 2) - 50}, (vec2){100, 100});
 
 	//Sprite Sheet
 	texture_create(&image, "./char_blue.png", CG_PNG);
@@ -96,26 +96,18 @@ int main(int argc, char* argv[])
 
 	if(!pause)
 	{
-		if(box.pos[0] > box.width / 2 && (state.input.left == KS_HELD || state.input.left ==  KS_PRESSED))
+		if((state.input.left == KS_HELD || state.input.left ==  KS_PRESSED))
 			box.pos[0] -= 1.75;
 		
-		if(box.pos[0] < WIN_WIDTH - (box.width / 2) && (state.input.right == KS_HELD || state.input.right == KS_PRESSED))
+		if((state.input.right == KS_HELD || state.input.right == KS_PRESSED))
 			box.pos[0] += 1.75;
 
-		if(box.pos[1] > box.height / 2 && (state.input.up == KS_HELD || state.input.up == KS_PRESSED))
+		if((state.input.up == KS_HELD || state.input.up == KS_PRESSED))
 			box.pos[1] -= 1.75;
 			
-		if(box.pos[1] < WIN_HEIGHT - (box.height / 2) && (state.input.down == KS_HELD || state.input.down == KS_PRESSED))
+		if((state.input.down == KS_HELD || state.input.down == KS_PRESSED))
 			box.pos[1] += 1.75;
-		
-		image.pos[0] += velocity[0];
-		image.pos[1] += velocity[1];
-
-		if(image.pos[0] < image.width / 2 || image.pos[0] > WIN_WIDTH - (image.width / 2))
-			velocity[0] *= -1;
-		
-		if(image.pos[1] < image.height / 2 || image.pos[1] > WIN_HEIGHT - (image.width / 2))
-			velocity[1] *= -1;
+	
 	}
 
 	render_clear();
