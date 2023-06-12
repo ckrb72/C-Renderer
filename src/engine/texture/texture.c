@@ -24,6 +24,10 @@ static Texture texture_load(const char* path, Texture_Type fileType)
     //Could replace with normal if elseif statements but that just adds a lot of extra lines for no reason.
     unsigned int ftype = (fileType == CG_JPG) ? GL_RGB : GL_RGBA;
 
+    //Might want to do this down the line because stbi puts [0][0] as the top left pixel instead of
+    //the bottom left
+    //stbi_set_flip_vertically_on_load(1);
+
     unsigned char* data = stbi_load(path, &tex.width, &tex.height, &tex.nrChannels, 0);
 
     if(!data)

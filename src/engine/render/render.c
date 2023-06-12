@@ -151,11 +151,11 @@ static buffer_t buffer_init(float* vertexBuffer, unsigned int vertexSize, unsign
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementSize, elementBuffer, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
+    //glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    //glEnableVertexAttribArray(1);
 
     glBindVertexArray(0);
 
@@ -175,10 +175,10 @@ static void quad_buffer_init()
     //For some reason moving feels weird now but might just be a placebo
     float vertices[] = 
     {
-        0.0, 0.0, 0.0,    0.0, 0.0,
-        1.0, 0.0, 0.0,     1.0, 0.0,
-        1.0, 1.0, 0.0,      1.0, 1.0,
-        0.0, 1.0, 0.0,     0.0, 1.0
+        0.0, 0.0, 0.0,
+        1.0, 0.0, 0.0,
+        1.0, 1.0, 0.0,
+        0.0, 1.0, 0.0
     };
 
     unsigned int indices[] = 
@@ -188,4 +188,50 @@ static void quad_buffer_init()
     };
 
     quad_buffer = buffer_init(vertices, sizeof(vertices), indices, sizeof(indices));
+
+    
+    //The x coords work fine but the y coords are flipped vertically because of the way
+    //stbi loads images. It puts the [0][0] in the top left corner instead of the bottom
+    //left corner how opengl expects it to be. So we could either flip the pixels, which is
+    //expensive, figure out how to load the images ourselves, which is time consuming,
+    //or just keep in mind that our engine loads the images upside down and we need to convert
+    //that back to the correct uv, which is what we're going to do.
+
+    /*
+        STBI_IMAGE:
+        [0][0], [1][0], [2][0], ...
+        .
+        .
+        .
+
+        vs.
+        
+        OPENGL:
+        .
+        .
+        .
+        .
+        [0][0], [1][0], [2][0], ...
+    */
+
+    unsigned int uv;
+
+    float texCoords[] = 
+    {
+        0.0, 0.0,
+        1.0, 0.0,
+        1.0, 1.0,
+        0.0, 1.0
+    };
+
+    glBindVertexArray(quad_buffer.vao);
+
+    glGenBuffers(1, &uv);
+    glBindBuffer(GL_ARRAY_BUFFER, uv);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+
+    glBindVertexArray(0);
 }
