@@ -3,6 +3,8 @@
 #include "../engine_state.h"
 #include "../rect/rect.h"
 
+#define MAX_QUADS 10000
+
 typedef enum render_type
 {
     CG_UNKNOWN,
@@ -10,10 +12,18 @@ typedef enum render_type
     CG_CIRCLE
 }Render_Type;
 
+//Initializes rendering functionality
+//Must be called before any rendering an be done
 int render_init(Renderer* state, float width, float height);
+
+//Displays the buffer that is currently being drawed to
 void render_display(Renderer* state);
+
+//Clears the back buffer and prepares for drawing again
 void render_clear();
 
+//Takes in any entity and draws it to the buffer
+//Must specify type of thing being drawn as parameter
 void render_draw(void* data, Render_Type type);
 
 

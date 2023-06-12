@@ -32,7 +32,7 @@ static void update_key_state(uint8_t current_state, Key_State* key_state)
     }
 }
 
-//Will fill this out eventually
+//Updates the keys defined in the state given as input
 void input_update(Renderer* state)
 {
 

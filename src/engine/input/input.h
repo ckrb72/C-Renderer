@@ -5,5 +5,5 @@
 #pragma once
 #include "../engine_state.h"
 
-
+//Updates the input state to reflect what is currently being pressed on the keyboard
 void input_update(Renderer* state);

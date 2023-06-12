@@ -3,7 +3,7 @@
 #include "render/render_internal.h"
 #include "input/input_internal.h"
 
-//The main game state struct that is going to hold all of the implemented features
+//The main render state struct that is going to hold all of the implemented features
 typedef struct Renderer
 {
     Render_State render;

@@ -1,13 +1,20 @@
 /*
 		To-Do List:
 
-		- MOST IMPORTANT: Batch Renderer to cut back on draw calls
-
-		- Add Benchmarking to see why so much cpu is being used up
+		MOST IMPORTANT: 
+		- Batch Renderer to cut back on draw calls
 
 		- Add animation support by allowing rects to only render part of textures (allows support for sprite sheets, making it easy and efficient to support animations)
 		
 		- Get Camera working so can move around the world
+
+		- Add ECS system for managing entities. Might want to put this in a game rather than the renderer
+
+		- Document API
+
+
+		LESS IMPORTANT:
+		- Add Benchmarking to see why so much cpu is being used up		
 
 		- Finish IO System (Add config files and controller components)
 
@@ -17,15 +24,11 @@
 
 		- Create Controller functionality that allows for multiple configs for multiple players
 
-		- Add ECS system for managing entities. Might want to put this in a game rather than the renderer
-
 		- Add wireframe viewer
 
 		- Add UI and debug information
 
 		- Maybe add circles
-
-		- Document API
 
 */
 
