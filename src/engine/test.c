@@ -4,8 +4,6 @@
 		MOST IMPORTANT: 
 		- Batch Renderer to cut back on draw calls
 
-		- Add animation support by allowing rects to only render part of textures (allows support for sprite sheets, making it easy and efficient to support animations)
-		
 		- Get Camera working so can move around the world
 
 		- Add ECS system for managing entities. Might want to put this in a game rather than the renderer
