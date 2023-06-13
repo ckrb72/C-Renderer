@@ -1,6 +1,13 @@
 #pragma once
 
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#include <string.h>
+#else
 #include <glad/glad.h>
+#endif
+
+
 #define SDL_MAIN_HANDELED
 #include <SDL2/SDL.h>
 #include "render/render.h"

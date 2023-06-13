@@ -3,6 +3,7 @@
 #include "../engine_state.h"
 #include "../rect/rect.h"
 
+
 #define MAX_QUADS 10000
 
 typedef enum render_type

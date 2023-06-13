@@ -1,4 +1,9 @@
 #pragma once
+
+#ifdef __APPLE__
+#include <string.h>
+#endif
+
 #include <SDL2/SDL.h>
 #include <linmath.h>
 

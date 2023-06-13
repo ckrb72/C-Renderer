@@ -54,13 +54,10 @@ int main(int argc, char* argv[])
 
 	shader_init();
 
-	Render_Rect box = rectangle_create((vec2){(WIN_WIDTH / 2) - 50, (WIN_HEIGHT / 2) - 50}, (vec2){100, 100});
+	Render_Rect box = rectangle_create((vec2){0, 0}, (vec2){200, 200});
 
-	Render_Rect image = rectangle_create((vec2){(WIN_WIDTH / 2) - 400, (WIN_HEIGHT / 2) - 300}, (vec2){800, 600});
-	Render_Rect face = rectangle_create((vec2){(WIN_WIDTH / 2) - 400, (WIN_HEIGHT / 2) - 300}, (vec2){800, 600});
+	Render_Rect face = rectangle_create((vec2){(WIN_WIDTH / 2) - 50, (WIN_HEIGHT / 2) - 50}, (vec2){100, 100});
 
-	//Sprite Sheet
-	texture_create(&image, "./char_blue.png", CG_PNG);
 	texture_create(&face, "./res/textures/awesomeface.png", CG_PNG);
 
 	//Need to make clipping rect somehow and upload it with correct uv coords
@@ -99,23 +96,25 @@ int main(int argc, char* argv[])
 	if(!pause)
 	{
 		if((state.input.left == KS_HELD || state.input.left ==  KS_PRESSED))
-			box.pos[0] -= 1.75;
+			face.pos[0] -= 10;
 		
 		if((state.input.right == KS_HELD || state.input.right == KS_PRESSED))
-			box.pos[0] += 1.75;
+			face.pos[0] += 10;
 
 		if((state.input.up == KS_HELD || state.input.up == KS_PRESSED))
-			box.pos[1] -= 1.75;
+			face.pos[1] -= 10;
 			
 		if((state.input.down == KS_HELD || state.input.down == KS_PRESSED))
-			box.pos[1] += 1.75;
+			face.pos[1] += 10;
 	
 	}
 
 	render_clear();
 
 	//Draw Objects
-	render_draw(&image, CG_QUAD);
+	render_draw(&box, CG_QUAD);
+
+	render_draw(&face, CG_QUAD);
 	
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);

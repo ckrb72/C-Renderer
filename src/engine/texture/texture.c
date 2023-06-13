@@ -2,7 +2,12 @@
 #include "texture_internal.h"
 #include "../shader/shader.h"
 
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#else
 #include <glad/glad.h>
+#endif
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 #include "../debug.h"
@@ -26,7 +31,9 @@ static Texture texture_load(const char* path, Texture_Type fileType)
 
     //Might want to do this down the line because stbi puts [0][0] as the top left pixel instead of
     //the bottom left
-    //stbi_set_flip_vertically_on_load(1);
+
+    
+    stbi_set_flip_vertically_on_load(1);
 
     unsigned char* data = stbi_load(path, &tex.width, &tex.height, &tex.nrChannels, 0);
 

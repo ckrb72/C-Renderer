@@ -1,4 +1,9 @@
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#else
 #include <glad/glad.h>
+#endif
+
 #include <linmath.h>
 
 #include "render.h"
@@ -62,6 +67,8 @@ int render_init(Renderer* state, float width, float height)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     quad_buffer_init();
+
+    return 0;
 }
 
 //Draws the entity given to the screen
@@ -218,10 +225,10 @@ static void quad_buffer_init()
 
     float texCoords[] = 
     {
-        0.0, 0.0,
-        1.0, 0.0,
-        1.0, 1.0,
-        0.0, 1.0
+        0.0, 0.5,
+        0.5, 0.5,
+        0.5, 0.0,
+        0.0, 0.0
     };
 
     glBindVertexArray(quad_buffer.vao);
