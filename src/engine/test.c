@@ -54,8 +54,6 @@ int main(int argc, char* argv[])
 
 	shader_init();
 
-	Render_Rect box = rectangle_create((vec2){0, 0}, (vec2){200, 200});
-
 	Render_Rect face = rectangle_create((vec2){(WIN_WIDTH / 2) - 50, (WIN_HEIGHT / 2) - 50}, (vec2){100, 100});
 
 	texture_create(&face, "./res/textures/awesomeface.png", CG_PNG);
@@ -63,6 +61,8 @@ int main(int argc, char* argv[])
 	//Need to make clipping rect somehow and upload it with correct uv coords
 
 	int pause = 0;
+
+	Render_Rect clip = rectangle_create((vec2){0,0}, (vec2){50, 50});
 
 	//poll events
 	while(!should_quit)
@@ -106,15 +106,17 @@ int main(int argc, char* argv[])
 			
 		if((state.input.down == KS_HELD || state.input.down == KS_PRESSED))
 			face.pos[1] += 10;
+
+		clip.pos[0] += velocity[0];
+		clip.pos[1] += velocity[1];
 	
 	}
 
 	render_clear();
 
 	//Draw Objects
-	render_draw(&box, CG_QUAD);
 
-	render_draw(&face, CG_QUAD);
+	render_draw(&face, &clip, CG_QUAD);
 	
 	//Swaps buffers to buffer where everything is rendered
 	render_display(&state);

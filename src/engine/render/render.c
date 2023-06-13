@@ -16,11 +16,11 @@
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 //Prototypes of render functions
-static void render_quad(void* data);
-static void render_circle(void* data);
+static void render_quad(void* data, void* clip);
+static void render_circle(void* data, void* clip);
 
 //Array of function pointers to render functions
-static void (*func_ptr_arr[3])(void* data) = {0, render_quad, render_circle};
+static void (*func_ptr_arr[3])(void* data, void* clip) = {0, render_quad, render_circle};
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -36,6 +36,8 @@ typedef struct
 {
     unsigned int vao, vbo, ebo;
 
+    unsigned int uv;
+
     unsigned int index_size;
 }buffer_t;
 
@@ -44,6 +46,9 @@ static buffer_t quad_buffer = {0};
 static buffer_t buffer_init(float* vertexBuffer, unsigned int vertexSize, unsigned int* elementBuffer, unsigned int elementSize);
 
 static void quad_buffer_init();
+
+//Only generates Quad uv's at this point. Might have to change later
+static void gen_quad_uv(Render_Rect* quad, Render_Rect* clip);
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -72,10 +77,10 @@ int render_init(Renderer* state, float width, float height)
 }
 
 //Draws the entity given to the screen
-void render_draw(void* data, Render_Type type)
+void render_draw(void* data,void* clip, Render_Type type)
 {
     //Indexes into the function pointer array, "dereferencing", or calling, the function at the index given by the type
-    (*func_ptr_arr[type])(data);
+    (*func_ptr_arr[type])(data, clip);
 }
 
 //Swaps the buffer, displaying what was just drawn to the screen using render_draw()
@@ -98,10 +103,13 @@ void render_clear()
 
 
 //OpenGL calls for rendering a rectangle
-static void render_quad(void* data)
+static void render_quad(void* data, void* clip)
 {
 
     Render_Rect* entity = (Render_Rect*)data;
+
+    if(clip)
+        gen_quad_uv(entity, (Render_Rect*)clip);
     //Uses the entity's shader
     glUseProgram(entity->shader);
 
@@ -133,7 +141,7 @@ static void render_quad(void* data)
 }
 
 //OpenGL calls for rendering a circle
-static void render_circle(void* data)
+static void render_circle(void* data, void* clip)
 {
     printf("NOT IMPLEMENTED YET\n");
 }
@@ -221,24 +229,43 @@ static void quad_buffer_init()
         [0][0], [1][0], [2][0], ...
     */
 
-    unsigned int uv;
-
     float texCoords[] = 
     {
-        0.0, 0.5,
-        0.5, 0.5,
-        0.5, 0.0,
+        0.0, 1.0,
+        1.0, 1.0,
+        1.0, 0.0,
         0.0, 0.0
     };
 
     glBindVertexArray(quad_buffer.vao);
 
-    glGenBuffers(1, &uv);
-    glBindBuffer(GL_ARRAY_BUFFER, uv);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
+    glGenBuffers(1, &quad_buffer.uv);
+    glBindBuffer(GL_ARRAY_BUFFER, quad_buffer.uv);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_DYNAMIC_DRAW);
 
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(1);
 
     glBindVertexArray(0);
+}
+
+//Need to make it so that it only effects the quad currently being worked on. So maybe have each quad hold a
+//uv buffer? Would need to think about how to do this efficiently
+static void gen_quad_uv(Render_Rect* quad, Render_Rect* clip)
+{
+
+    
+
+    float uv[] =
+    {
+        //Figure out what the uv's need to be for this
+        clip->pos[0] / quad->width, (1 - clip->pos[1]) / quad->height,
+        (clip->pos[0] + clip->width) / quad->width, (1 - clip->pos[1]) / quad->height,
+        (clip->pos[0] + clip->width) / quad->width, (1 - (clip->pos[1] + clip->height)) / quad->height,
+        clip->pos[0] /  quad->width, (1 - (clip->pos[1] + clip->height)) / quad->height
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, quad_buffer.uv);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_DYNAMIC_DRAW);
+
 }

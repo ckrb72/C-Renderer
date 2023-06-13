@@ -25,7 +25,7 @@ void render_clear();
 
 //Takes in any entity and draws it to the buffer
 //Must specify type of thing being drawn as parameter
-void render_draw(void* data, Render_Type type);
+void render_draw(void* data, void* clip, Render_Type type);
 
 
 /*  Not using this but this is another way to do the render_draw function
