@@ -127,7 +127,7 @@ static void render_quad(void* data, void* clip)
 
     //Creates the model matrix, translates it to the position and scales it then send it to the shader
     mat4x4_translate(model, entity->pos[0], entity->pos[1], 0);
-    mat4x4_scale_aniso(model, model, entity->width, entity->height, 1);
+    mat4x4_scale_aniso(model, model, entity->w, entity->h, 1);
 
     glUniformMatrix4fv(glGetUniformLocation(entity->shader, "model"), 1, GL_FALSE, &model[0][0]);
 
@@ -253,17 +253,23 @@ static void quad_buffer_init()
 //uv buffer? Would need to think about how to do this efficiently
 static void gen_quad_uv(Render_Rect* quad, Render_Rect* clip)
 {
-
-    
-
+ 
     float uv[] =
     {
-        //Figure out what the uv's need to be for this
-        clip->pos[0] / quad->width, (1 - clip->pos[1]) / quad->height,
-        (clip->pos[0] + clip->width) / quad->width, (1 - clip->pos[1]) / quad->height,
-        (clip->pos[0] + clip->width) / quad->width, (1 - (clip->pos[1] + clip->height)) / quad->height,
-        clip->pos[0] /  quad->width, (1 - (clip->pos[1] + clip->height)) / quad->height
+        clip->pos[0] / quad->texture.w, 1 - (clip->pos[1] / quad->texture.h),
+        (clip->pos[0] + clip->w) / quad->texture.w, 1 - (clip->pos[1] / quad->texture.h),
+        (clip->pos[0] + clip->w) / quad->texture.w, 1 - ((clip->pos[1] + clip->h) / quad->texture.h),
+        clip->pos[0] /  quad->texture.w, 1 - ((clip->pos[1] + clip->h) / quad->texture.h)
     };
+
+    //This works if you do the clip width and height based off of the quad (ex. Quad is (200, 200), clip would be (50, 50) for a quarter of the quad)
+    /*float uv[] =
+    {
+        clip->pos[0] / quad->w, (1 - clip->pos[1]) / quad->h,
+        (clip->pos[0] + clip->w) / quad->w, (1 - clip->pos[1]) / quad->h,
+        (clip->pos[0] + clip->w) / quad->w, (1 - (clip->pos[1] + clip->h)) / quad->h,
+        clip->pos[0] /  quad->w, (1 - (clip->pos[1] + clip->h)) / quad->h
+    };*/
 
     glBindBuffer(GL_ARRAY_BUFFER, quad_buffer.uv);
     glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_DYNAMIC_DRAW);

@@ -4,7 +4,7 @@
 
 typedef struct render_rect
 {
-    unsigned int width, height;
+    unsigned int w, h;
 
     vec2 pos;
 

@@ -35,7 +35,7 @@ static Texture texture_load(const char* path, Texture_Type fileType)
     
     stbi_set_flip_vertically_on_load(1);
 
-    unsigned char* data = stbi_load(path, &tex.width, &tex.height, &tex.nrChannels, 0);
+    unsigned char* data = stbi_load(path, &tex.w, &tex.h, &tex.nrChannels, 0);
 
     if(!data)
     {
@@ -50,7 +50,7 @@ static Texture texture_load(const char* path, Texture_Type fileType)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, ftype, tex.width, tex.height, 0, ftype, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, ftype, tex.w, tex.h, 0, ftype, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
     stbi_image_free(data);
@@ -77,7 +77,7 @@ void texture_set(Render_Rect* entity, Texture texture)
 void texture_delete(Texture* tex)
 {
    glDeleteTextures(1, &tex->gl_texture);
-   tex->height = 0;
-   tex->width = 0;
+   tex->h = 0;
+   tex->w = 0;
    tex->nrChannels = 0;
 }

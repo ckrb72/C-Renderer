@@ -9,8 +9,8 @@ Render_Rect rectangle_create(vec2 position, vec2 scale)
 
     Render_Rect quad =
     {  
-        .width = scale[0],
-        .height = scale[1],
+        .w = scale[0],
+        .h = scale[1],
         .pos = {position[0], position[1]},
 
         //Need to figure out how to reuse shaders that need to be reused
@@ -24,8 +24,8 @@ Render_Rect rectangle_create(vec2 position, vec2 scale)
 
 void rectangle_set_scale(Render_Rect* quad, vec2 scale)
 {
-    quad->width = scale[0];
-    quad->height = scale[1];
+    quad->w = scale[0];
+    quad->h = scale[1];
 }
 
 void rectangle_set_position(Render_Rect* quad, vec2 position)

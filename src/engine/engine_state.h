@@ -8,4 +8,5 @@ typedef struct Renderer
 {
     Render_State render;
     Input_State input;
+    double delta_time;
 }Renderer;

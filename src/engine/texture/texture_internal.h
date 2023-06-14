@@ -2,8 +2,8 @@
 
 typedef struct texture
 {
-    int width;
-    int height;
+    int w;
+    int h;
     int nrChannels;
     unsigned int gl_texture;
 }Texture;
