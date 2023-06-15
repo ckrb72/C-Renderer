@@ -150,6 +150,12 @@ static void render_circle(void* data, void* clip)
 
 //Buffer Initialization Functions
 
+
+//Creates OpenGL buffers based off of the given information
+//@param vertexBuffer: Float array of the vertex information
+//@param vertexSize: Size of vertexBuffer in bytes
+//@param elementBuffer: Unsigned Int array of index information
+//@param elementSize: Size of elementBuffer in bytes
 static buffer_t buffer_init(float* vertexBuffer, unsigned int vertexSize, unsigned int* elementBuffer, unsigned int elementSize)
 {
     buffer_t buffer = {0};
@@ -183,6 +189,7 @@ static buffer_t buffer_init(float* vertexBuffer, unsigned int vertexSize, unsign
     return buffer;
 }
 
+//Initializes all the buffers needed for a quad and stores them in the quad_buffer static variable
 static void quad_buffer_init()
 {
 
@@ -249,6 +256,7 @@ static void quad_buffer_init()
     glBindVertexArray(0);
 }
 
+//TODO:
 //Need to make it so that it only effects the quad currently being worked on. So maybe have each quad hold a
 //uv buffer? Would need to think about how to do this efficiently
 static void gen_quad_uv(Render_Rect* quad, Render_Rect* clip)

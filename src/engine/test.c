@@ -64,13 +64,9 @@ int main(int argc, char* argv[])
 
 	//Need to figure out if clips should use texture width and height to decide values or rectangles width and heights
 	//Right now they're based off of the texture w and h
-	Render_Rect clip = rectangle_create((vec2){0,0}, (vec2){720, 80});
 
 	texture_create(&face, "res/textures/Knight/Colour1/Outline/120x80_PNGSheets/_Attack2.png", CG_PNG);
-
-	printf("Width: %u\n", face.texture.w);
-	printf("Height: %u\n", face.texture.h);
-
+	
 	int pause = 0;
 
 	int frame = 0;
