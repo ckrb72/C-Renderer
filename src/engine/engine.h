@@ -15,6 +15,7 @@
 #include "texture/texture.h"
 #include "input/input.h"
 #include "engine_state.h"
+#include "time/engine_time.h"
 
 #include <linmath.h>
 

@@ -254,6 +254,7 @@ static void quad_buffer_init()
 static void gen_quad_uv(Render_Rect* quad, Render_Rect* clip)
 {
  
+    //This uses the texture width and height
     float uv[] =
     {
         clip->pos[0] / quad->texture.w, 1 - (clip->pos[1] / quad->texture.h),
