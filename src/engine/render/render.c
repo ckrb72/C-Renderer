@@ -79,7 +79,7 @@ int render_init(Renderer* state, float width, float height)
 //Draws the entity given to the screen
 void render_draw(void* data,void* clip, Render_Type type)
 {
-    //Indexes into the function pointer array, "dereferencing", or calling, the function at the index given by the type
+    //Indexes into the function pointer array, "dereferencing", or calling, the function at the index given by the type enum
     (*func_ptr_arr[type])(data, clip);
 }
 

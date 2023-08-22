@@ -15,7 +15,6 @@
 
 //TODO: Make it so multiple textures can be used. This can be done through uniforms and binding the different textures via GL_TEXTURE0 ...
 
-//FIXME: Will need to make this static but need to clean up its uses in main first
 //FIXME: Doesn't work for all files so need to fix that
 static Texture texture_load(const char* path, Texture_Type fileType)
 {
@@ -32,14 +31,13 @@ static Texture texture_load(const char* path, Texture_Type fileType)
     //Might want to do this down the line because stbi puts [0][0] as the top left pixel instead of
     //the bottom left
 
-    
     stbi_set_flip_vertically_on_load(1);
 
     unsigned char* data = stbi_load(path, &tex.w, &tex.h, &tex.nrChannels, 0);
 
     if(!data)
     {
-        ERROR_RETURN((Texture){0}, "SOMETHING WENT REALLY FUCKING WRONG WITH LOADING THAT TEXTURE!\n");
+        ERROR_RETURN((Texture){0}, "SOMETHING WENT REALLY WRONG WITH LOADING THAT TEXTURE!\n");
     }
     
     glGenTextures(1, &tex.gl_texture);
