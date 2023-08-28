@@ -22,3 +22,9 @@
 
 #define CG_TRUE 1
 #define CG_FALSE 0
+
+void CG_init(Renderer* state, float width, float height)
+{
+    render_init(state, width, height);
+    shader_init();
+}

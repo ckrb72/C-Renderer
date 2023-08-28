@@ -53,10 +53,7 @@ vec2 velocity = {0.5, 0.5};
 int main(int argc, char* argv[])
 {
 	//Setup Render State
-	//CG_Init();
-	render_init(&state, WIN_WIDTH, WIN_HEIGHT);
-
-	shader_init();
+	CG_init(&state, WIN_WIDTH, WIN_HEIGHT);
 
 	Render_Rect face = rectangle_create((vec2){(WIN_WIDTH / 2) - 60, (WIN_HEIGHT / 2) - 40}, (vec2){120, 80});
 
